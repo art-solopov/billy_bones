@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <ul>
+	{% for payment_method in object_list %}
+	    <li>{{ payment_method.name }}</li>
+	{% endfor %}
+    </ul>
+{% endblock %}
+
