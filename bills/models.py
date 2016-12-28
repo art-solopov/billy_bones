@@ -18,6 +18,7 @@ BILL_STATES_DICT = {k: name for k, name in BILL_STATES}
 class Bill(TimeStampedModel):
     period = models.DateField(db_index=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    comment = models.TextField(null=True, blank=True)
 
     state_i = models.IntegerField(choices=BILL_STATES)
 

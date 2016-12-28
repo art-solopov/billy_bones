@@ -4,8 +4,31 @@
 	<title>{% block title %}Billy bones{% endblock %}</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+
+	<!-- TODO replace with an actual CSS file -->
+	<style>
+	 body {
+	     background: #EEE;
+	     font-size: 16px;
+	     line-height: 1.4;
+	 }
+	 
+	 body > main {
+	     display: block;
+	     max-width: 1200px;
+	     margin: 0 auto;
+	     padding: 15px 0;
+	 }
+
+	 table {
+	     border: 2px solid black;
+	     width: 100%;
+	 }
+	</style>
     </head>
     <body>
-	{% block content %}{% endblock %}
+	<main>
+	    {% block content %}{% endblock %}
+	</main>
     </body>
 </html>

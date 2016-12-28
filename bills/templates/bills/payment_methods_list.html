@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <ul>
+    <h1>Payment methods</h1>
+    <table>
 	{% for payment_method in object_list %}
-	    <li>{{ payment_method.name }}</li>
+	    <tr>
+		<td>{{ payment_method.id }}</td>
+		<td>{{ payment_method.name }}</td>
+	    </tr>
 	{% endfor %}
-    </ul>
+    </table>
 {% endblock %}
 
