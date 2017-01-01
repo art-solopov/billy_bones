@@ -2,11 +2,19 @@
 
 {% block content %}
     <h1>Payment methods</h1>
-    <table>
+    
+    <div>
+	<a href="{% url "bills:payment_methods:new" %}">New payment method</a>
+    </div>
+    
+    <table class="u-full-width">
 	{% for payment_method in object_list %}
 	    <tr>
 		<td>{{ payment_method.id }}</td>
 		<td>{{ payment_method.name }}</td>
+		<td>
+		    <a href="{% url 'bills:payment_methods:edit' pk=payment_method.id %}">Edit</a>
+		</td>
 	    </tr>
 	{% endfor %}
     </table>
