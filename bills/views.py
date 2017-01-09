@@ -1,7 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.views.generic.edit import (DeleteView, CreateView, UpdateView,
-                                       FormView)
+from django.views.generic.edit import (DeleteView, CreateView, UpdateView)
+from django.core.exceptions import PermissionDenied
+from django_fsm import can_proceed
 
 from .models import PaymentMethod, Bill
 from . import forms
@@ -32,3 +33,30 @@ class BillsList(ListView):
     model = Bill
     template_name = 'bills/bills_list.html'
     queryset = Bill.objects.prefetch_related('payment_method')
+
+
+class BillCUMixin:
+    template_name = 'bills/bill_form.html'
+    model = models.Bill
+    form_class = forms.BillForm
+    success_url = reverse_lazy('bills:index')
+
+
+class EditBill(BillCUMixin, UpdateView):
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset=queryset)
+        if self.transition:
+            transition = getattr(obj, self.transition)
+            if can_proceed(transition):
+                transition()
+            else:
+                raise PermissionDenied
+        return obj
+
+    @property
+    def transition(self):
+        return self.kwargs.get('action', None)
+
+
+class CreateBill(BillCUMixin, CreateView):
+    initial = {'state_i': 1}

@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 
 from .views import (PaymentMethodsList, EditPaymentMethod, CreatePaymentMethod,
-                    BillsList)
+                    BillsList, EditBill)
 
 app_name = 'bills'
 
@@ -14,5 +14,6 @@ payment_methods_patterns = [
 urlpatterns = [
     url(r'^payment_methods/', include((payment_methods_patterns, 'payment_methods'))),
     
-    url(r'^bills/?$', BillsList.as_view(), name='bills_index')
+    url(r'^bills/?$', BillsList.as_view(), name='index'),
+    url(r'^bills/(?P<pk>\d+)/edit/(?P<action>\w+)?/?$', EditBill.as_view(), name='edit'),
 ]

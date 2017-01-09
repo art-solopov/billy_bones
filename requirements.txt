@@ -1,6 +1,7 @@
 django==1.10
 django-model-utils==2.6
 psycopg2
+django-fsm==2.4.0
 
 ipython
 jedi
