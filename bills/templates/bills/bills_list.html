@@ -5,6 +5,10 @@
 
 {% block content %}
     <h1>Bills</h1>
+
+    <p>
+	<a href="{% url 'bills:new' %}">Create bill</a>
+    </p>
     
     <table class="u-full-width">
 	{% for bill in object_list %}
@@ -18,8 +22,16 @@
 		    {% endif %}
 		</td>
 		<td>{{ bill.cost }}</td>
+		<td>{{ bill.created | format_date_long }}</td>
 		<td>{{ bill.paid | format_date_long }}</td>
 		<td>{{ bill.printed | format_date_long }}</td>
+		<td>
+		    <a href="{% url 'bills:edit' pk=bill.id %}">Edit</a>
+		    {% for tr in bill.get_available_state_i_transitions %}
+			<a href="{% url 'bills:edit' pk=bill.id action=tr.name %}">{{ tr | transition_str }}</a>
+		    {% endfor %}
+		    <a href="{% url 'bills:delete' pk=bill.id %}">Delete</a>
+		</td>
 	    </tr>
 	{% endfor %}
 {% endblock %}

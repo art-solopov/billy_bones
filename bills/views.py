@@ -66,3 +66,9 @@ class EditBill(BillCUMixin, UpdateView):
 
 class CreateBill(BillCUMixin, CreateView):
     initial = {'state_i': 1}
+
+
+class DeleteBill(DeleteView):
+    model = models.Bill
+    template_name = 'delete_confirm.html'
+    success_url = reverse_lazy('bills:index')

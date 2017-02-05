@@ -6,3 +6,8 @@ register = template.Library()
 def state_str(bill):
     # TODO add i18n and color
     return bill.state
+
+@register.filter
+def transition_str(transition):
+    # TODO add i18n and color
+    return transition.name.capitalize()
