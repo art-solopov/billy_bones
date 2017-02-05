@@ -29,6 +29,12 @@ class EditPaymentMethod(PaymentMethodCUMixin, UpdateView):
     pass
 
 
+class DeletePaymentMethod(DeleteView):
+    model = models.PaymentMethod
+    template_name = 'delete_confirm.html'
+    success_url = reverse_lazy('bills:payment_methods:index')
+
+
 class BillsList(ListView):
     model = Bill
     template_name = 'bills/bills_list.html'
