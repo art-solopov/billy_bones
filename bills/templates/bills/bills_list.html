@@ -25,6 +25,7 @@
 		<td>{{ bill.created | format_date_long }}</td>
 		<td>{{ bill.paid | format_date_long }}</td>
 		<td>{{ bill.printed | format_date_long }}</td>
+		<td>{{ bill.tags.names | join:", " }}
 		<td>
 		    <a href="{% url 'bills:edit' pk=bill.id %}">Edit</a>
 		    {% for tr in bill.get_available_state_i_transitions %}

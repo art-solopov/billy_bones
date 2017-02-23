@@ -38,7 +38,13 @@ class DeletePaymentMethod(DeleteView):
 class BillsList(ListView):
     model = Bill
     template_name = 'bills/bills_list.html'
-    queryset = Bill.objects.prefetch_related('payment_method')
+
+    def get_queryset(self):
+        queryset = Bill.objects.prefetch_related('payment_method')
+        tag = self.kwargs.get('tag', None)
+        if tag:
+            queryset = queryset.filter(tags__name=tag)
+        return queryset
 
 
 class BillCUMixin:

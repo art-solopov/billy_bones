@@ -5,6 +5,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
 from django_fsm import FSMIntegerField, transition
+from taggit.managers import TaggableManager
 
 
 class PaymentMethod(models.Model):
@@ -53,6 +54,8 @@ class Bill(TimeStampedModel):
         null=True, blank=True,
         on_delete=models.SET_NULL
     )
+
+    tags = TaggableManager()
 
     @property
     def state(self):

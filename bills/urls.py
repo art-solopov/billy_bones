@@ -15,9 +15,9 @@ payment_methods_patterns = [
 ]
 
 urlpatterns = [
-    url(r'^payment_methods/', include((payment_methods_patterns, 'payment_methods'))),
+    url(r'^payment_methods/$', include((payment_methods_patterns, 'payment_methods'))),
 
-    url(r'^bills/?$', BillsList.as_view(), name='index'),
+    url(r'^bills(?:/(?P<tag>\w+)/?)?$', BillsList.as_view(), name='index'),
     url(r'^bills/(?P<pk>\d+)/edit(?:/(?P<action>\w+))?/?$', EditBill.as_view(), name='edit'),
     url(r'^bills/(?P<pk>\d+)/delete/?$', DeleteBill.as_view(), name='delete'),
     url(r'^bills/new/?$', CreateBill.as_view(), name='new'),
