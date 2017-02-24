@@ -6,6 +6,12 @@
 {% block content %}
     <h1>Bills</h1>
 
+    <ul class="tags-list">
+	{% for tag in tags %}
+	    <li class="tags-list__tag">{{ tag.name }}
+	{% endfor %}
+    </ul>
+
     <p>
 	<a href="{% url 'bills:new' %}">Create bill</a>
     </p>
@@ -25,7 +31,7 @@
 		<td>{{ bill.created | format_date_long }}</td>
 		<td>{{ bill.paid | format_date_long }}</td>
 		<td>{{ bill.printed | format_date_long }}</td>
-		<td>{{ bill.tags.names | join:", " }}
+		<td>{{ bill | tag_names }}
 		<td>
 		    <a href="{% url 'bills:edit' pk=bill.id %}">Edit</a>
 		    {% for tr in bill.get_available_state_i_transitions %}

@@ -22,7 +22,7 @@ class Bill(TimeStampedModel):
         (50, 'paid'),
         (99, 'printed')
     ])
-    STATE_IDS = { name: i for i, name in STATES.items() }
+    STATE_IDS = {name: i for i, name in STATES.items()}
 
     state_i = FSMIntegerField(default=STATE_IDS['new'])
 

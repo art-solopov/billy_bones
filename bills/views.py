@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import (DeleteView, CreateView, UpdateView)
 from django.core.exceptions import PermissionDenied
 from django_fsm import can_proceed
+from taggit.models import Tag
 
 from .models import PaymentMethod, Bill
 from . import forms
@@ -40,11 +41,17 @@ class BillsList(ListView):
     template_name = 'bills/bills_list.html'
 
     def get_queryset(self):
-        queryset = Bill.objects.prefetch_related('payment_method')
+        queryset = Bill.objects.prefetch_related('payment_method', 'tags')
         tag = self.kwargs.get('tag', None)
         if tag:
             queryset = queryset.filter(tags__name=tag)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.filter(
+            taggit_taggeditem_items__content_type__model='bill').values('name')
+        return context
 
 
 class BillCUMixin:
