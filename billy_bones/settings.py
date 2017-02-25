@@ -131,13 +131,33 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler'
+        },
+        'sql_console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'sql_color'
         }
     },
 
     'loggers': {
         'django.db.backends': {
             'level': 'DEBUG',
-            'handlers': ['console']
+            'handlers': ['sql_console']
+        }
+    },
+
+    'formatters': {
+        'sql_color': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': '%(sql_log_color)s[SQL]%(reset)s (%(duration)8.6f) %(sql)s | %(params_log_color)s%(params)s%(reset)s',
+            'secondary_log_colors': {
+                'sql': {
+                    'DEBUG': 'bold_purple',
+                },
+                'params': {
+                    'DEBUG': 'bold_yellow',
+                }
+            }
         }
     }
 }
