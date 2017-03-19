@@ -1,0 +1,21 @@
+{
+  "name": "billy_bones",
+  "homepage": "https://github.com/art-solopov/billy_bones",
+  "authors": [
+    "Artemiy Solopov <art-solopov@yandex.ru>"
+  ],
+  "description": "Assets for the Billy-Bones app",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "normalize.css#^5.0.0"
+  }
+}

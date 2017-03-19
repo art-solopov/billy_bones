@@ -6,4 +6,4 @@ django-taggit==0.22
 colorlog
 
 ipython
-jedi
+jedi==0.9.0
