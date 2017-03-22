@@ -92,3 +92,8 @@ ENV/
 
 # Bower components
 bower_components
+# Node modules
+node_modules
+
+# Assets
+*/static/*.css
