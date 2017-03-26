@@ -1,0 +1,37 @@
+.layouts__container {
+    display: grid;
+    width: 100%;
+    min-height: 100vh;
+    
+    grid-template-columns: [sidebar] minmax(20em, 25%)
+				     [main] auto;
+    grid-template-rows: [header] fit-content(15em)
+				 [main] auto
+				 [footer] fit-content(15em);
+
+    grid-template-areas: "header header"
+			     ". ."
+			     "footer footer";
+
+
+    grid-column-gap: 1em;
+    grid-row-gap: .5em;
+}
+
+.layouts__header {
+    grid-area: header;
+}
+
+.layouts__footer {
+    grid-area: footer;
+}
+
+.layouts__main {
+    grid-column: main;
+    grid-row: main
+}
+
+.layouts__sidebar {
+    grid-column: sidebar;
+    grid-row: main;
+}
