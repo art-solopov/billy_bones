@@ -1,13 +1,13 @@
-@mixin pill {
+@mixin pill($bgcol: lighten($col-dark, 45%)) {
     // TODO: change colors
     display: inline;
     padding: .25em .5em;
     border-radius: .25em;
 
+    @extend %clean-link;
+
     &:hover,
     &:focus {
-	text-decoration: none;
-	color: currentColor;
-	background: #EEE;
+	background: $bgcol;
     }
 }

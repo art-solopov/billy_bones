@@ -1,10 +1,14 @@
 import os
 import subprocess as sp
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.apps import apps
 
+
 class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument('command', nargs='?', default='css')
+
     def handle(self, *args, **options):
         installed_app_paths = [a.path for a in apps.app_configs.values()]
 
@@ -13,4 +17,4 @@ class Command(BaseCommand):
 
         gulp_env = dict(os.environ)
         gulp_env['APP_PATHS'] = ':'.join(local_paths)
-        sp.run(['gulp', 'css'], env=gulp_env)
+        sp.run(['gulp', options['command']], env=gulp_env)

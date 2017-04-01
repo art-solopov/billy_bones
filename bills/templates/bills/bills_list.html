@@ -6,9 +6,11 @@
 {% block content %}
     <h1>Bills</h1>
 
-    <ul class="tags-list">
+    <ul class="tags-list bills-tags">
 	{% for tag in tags %}
-	    <li class="tags-list__tag">{{ tag.name }}
+	    <li class="tags-list__tag">
+		<a href="{% url 'bills:index' tag=tag.slug %}">{{ tag.name }}</a>
+	    </li>
 	{% endfor %}
     </ul>
 
@@ -21,7 +23,7 @@
 	    <tr>
 		<td>{{ bill.id }}</td>
 		<td>{{ bill.period | format_period }}</td>
-		<td>{{ bill | state_str }}
+		<td>{{ bill | state_str | safe }}
 		<td>
 		    {% if bill.payment_method %}
 			{{ bill.payment_method.name }}

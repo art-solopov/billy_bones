@@ -50,7 +50,7 @@ class BillsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = Tag.objects.filter(
-            taggit_taggeditem_items__content_type__model='bill').values('name')
+            taggit_taggeditem_items__content_type__model='bill').values('name', 'slug')
         return context
 
 

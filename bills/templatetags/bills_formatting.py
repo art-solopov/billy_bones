@@ -6,7 +6,8 @@ register = template.Library()
 @register.filter
 def state_str(bill):
     # TODO add i18n and color
-    return bill.state
+    return '<span class="bill-state bill-state-{0}">{1}</span>'.format(
+        bill.state, bill.state.upper())
 
 
 @register.filter
