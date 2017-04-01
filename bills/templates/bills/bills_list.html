@@ -16,7 +16,7 @@
 	<a href="{% url 'bills:new' %}">Create bill</a>
     </p>
     
-    <table class="full-width">
+    <table class="full-width bills-list-table">
 	{% for bill in object_list %}
 	    <tr>
 		<td>{{ bill.id }}</td>
@@ -41,4 +41,5 @@
 		</td>
 	    </tr>
 	{% endfor %}
+    </table>
 {% endblock %}

@@ -1,0 +1,13 @@
+@mixin pill {
+    // TODO: change colors
+    display: inline;
+    padding: .25em .5em;
+    border-radius: .25em;
+
+    &:hover,
+    &:focus {
+	text-decoration: none;
+	color: currentColor;
+	background: #EEE;
+    }
+}

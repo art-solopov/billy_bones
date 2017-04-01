@@ -13,7 +13,7 @@ gulp.task('css', () => {
 	       .pipe(sass({
 		   includePaths:[
 		       // TODO add libraries here
-		       ...assetPaths.map( p => path.join(p, 'shared'))
+		       ...assetPaths.map( p => path.join(p, 'css', 'shared'))
 		   ]
 	       }))
 	       .pipe(gulp.dest(

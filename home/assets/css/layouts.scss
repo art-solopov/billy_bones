@@ -3,8 +3,8 @@
     width: 100%;
     min-height: 100vh;
     
-    grid-template-columns: [sidebar] minmax(20em, 25%)
-				     [main] auto;
+    grid-template-columns: [sidebar] minmax(20em, 1fr)
+				     [main] 3fr;
     grid-template-rows: [header] fit-content(15em)
 				 [main] auto
 				 [footer] fit-content(15em);
