@@ -3,6 +3,7 @@ django-model-utils==2.6
 psycopg2
 django-fsm==2.4.0
 django-taggit==0.22
+django-activeurl==0.1.9
 colorlog
 
 ipython

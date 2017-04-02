@@ -1,0 +1,14 @@
+{% load activeurl %}
+
+{% activeurl %}
+<nav class="menu">
+    <ul>
+	<li>
+	    <a href="{% url 'bills:index' %}">Bills</a>
+	</li>
+	<li>
+	    <a href="{% url 'bills:payment_methods:index' %}">Payment methods</a>
+	</li>
+    </ul>
+</nav>
+{% endactiveurl %}
