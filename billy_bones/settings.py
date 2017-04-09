@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'taggit',
     'django_activeurl',
+    'crispy_forms',
     'home',
     'bills',
 ]
@@ -124,11 +125,7 @@ TAGGIT_CASE_INSENSITIVE = True
 
 STATIC_URL = '/static/'
 
-_bower_dir = os.path.join(BASE_DIR, 'bower_components')
-STATICFILES_DIRS = [
-    ('bower', _bower_dir),
-    ('bootstrap', os.path.join(_bower_dir, 'bootstrap', 'dist'))
-]
+STATICFILES_DIRS = []
 
 # Logging
 LOGGING = {
@@ -168,3 +165,5 @@ LOGGING = {
         }
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

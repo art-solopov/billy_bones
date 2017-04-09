@@ -1,23 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Payment methods</h1>
+    <header class="row">
+	<div class="col"><h1>Payment methods</h1></div>
+    </header>
     
-    <div>
-	<a href="{% url "bills:payment_methods:new" %}">New payment method</a>
+    <div class="row py-2">
+	<div class="col">
+	    <a href="{% url "bills:payment_methods:new" %}" class="btn btn-success">New payment method</a>
+	</div>
     </div>
-    
-    <table class="u-full-width">
-	{% for payment_method in object_list %}
-	    <tr>
-		<td>{{ payment_method.id }}</td>
-		<td>{{ payment_method.name }}</td>
-		<td>
-		    <a href="{% url 'bills:payment_methods:edit' pk=payment_method.id %}">Edit</a>
-		    <a href="{% url 'bills:payment_methods:delete' pk=payment_method.id %}">Delete</a>
-		</td>
-	    </tr>
-	{% endfor %}
-    </table>
+
+    <div class="row">
+	<div class="col">
+	    <table class="table">
+		{% for payment_method in object_list %}
+		    <tr>
+			<td>{{ payment_method.id }}</td>
+			<td>{{ payment_method.name }}</td>
+			<td>
+			    <a href="{% url 'bills:payment_methods:edit' pk=payment_method.id %}">Edit</a>
+			    <a href="{% url 'bills:payment_methods:delete' pk=payment_method.id %}">Delete</a>
+			</td>
+		    </tr>
+		{% endfor %}
+	    </table>
+	</div>
+    </div>
 {% endblock %}
 

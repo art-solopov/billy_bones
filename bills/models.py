@@ -55,7 +55,7 @@ class Bill(TimeStampedModel):
         on_delete=models.SET_NULL
     )
 
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     @property
     def state(self):

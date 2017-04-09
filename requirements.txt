@@ -4,6 +4,7 @@ psycopg2
 django-fsm==2.4.0
 django-taggit==0.22
 django-activeurl==0.1.9
+django-crispy-forms
 colorlog
 
 ipython
