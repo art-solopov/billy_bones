@@ -123,8 +123,11 @@ TAGGIT_CASE_INSENSITIVE = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+_bower_dir = os.path.join(BASE_DIR, 'bower_components')
 STATICFILES_DIRS = [
-    ('bower', os.path.join(BASE_DIR, 'bower_components'))
+    ('bower', _bower_dir),
+    ('bootstrap', os.path.join(_bower_dir, 'bootstrap', 'dist'))
 ]
 
 # Logging

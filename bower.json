@@ -4,7 +4,7 @@
   "authors": [
     "Artemiy Solopov <art-solopov@yandex.ru>"
   ],
-  "description": "Assets for the Billy-Bones app",
+  "description": "Assets for my billy_bones app",
   "main": "",
   "license": "MIT",
   "private": true,
@@ -16,6 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-css": "normalize.css#^5.0.0"
+    "bootstrap": "v4.0.0-alpha.6"
   }
 }

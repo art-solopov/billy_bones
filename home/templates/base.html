@@ -5,31 +5,30 @@
     <head>
 	<title>{% block title %}Billy bones{% endblock %}</title>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="{% static "bower/normalize-css/normalize.css" %}" />
-	<link rel="stylesheet" href="{% static "base.css" %}" />
-	<link rel="stylesheet" href="{% static "utils.css" %}" />
-	<link rel="stylesheet" href="{% static "layouts.css" %}" />
 
-	<link rel="stylesheet" href="{% static "bills.css" %}" />
-
-	<!-- Google fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
+	<!-- Bootstrap & dependencies -->
+	<script src="{% static "bower/jquery/dist/jquery.min.js" %}"></script>
+	<script src="{% static "bower/tether/dist/js/tether.min.js" %}"></script>
+	<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+	<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
     </head>
     <body>
-	<div class="layouts__container">
-	    <header class="layouts__header">
-		<h1><a href="/">Billy bones</a></h1>
-	    </header>
-	    <aside class="layouts__sidebar">
-		{% include "_menu.html" %}
-	    </aside>
-	    <main class="layouts__main">
-		{% block content %}{% endblock %}
-	    </main>
-	    <footer class="layouts__footer">
-		<p>&copy; Artemiy Solopov 2017</p>
-		<p>Made with Django & CSS Grids!</p>
-	    </footer>
+	{% include "_navbar.html" %}
+	<div class="container mt-3">
+	    <div class="row">
+		<aside class="col-sm-12 col-lg-auto">
+		    {% include "_menu.html" %}
+		</aside>
+		<main class="col-sm-12 col-lg">
+		    {% block content %}{% endblock %}
+		</main>
+	    </div>
+	    <div class="row">
+		<footer class="col-12">
+		    <p>&copy; Artemiy Solopov 2017</p>
+		    <p>Made with Django & Bootstrap</p>
+		</footer>
+	    </div>
 	</div>
     </body>
 </html>

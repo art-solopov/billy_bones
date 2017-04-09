@@ -4,44 +4,56 @@
 
 
 {% block content %}
-    <h1>Bills</h1>
+    <header class="row">
+	<h1>Bills</h1>
+    </header>
 
-    <ul class="tags-list bills-tags">
-	{% for tag in tags %}
-	    <li class="tags-list__tag">
-		<a href="{% url 'bills:index' tag=tag.slug %}">{{ tag.name }}</a>
-	    </li>
-	{% endfor %}
-    </ul>
+    <div class="row">
+	<div class="col">
+	    <div class="btn-group" role="group" aria-label="Bills tags">
+		{% for tag in tags %}
+		    <a href="{% url 'bills:index' tag=tag.slug %}" class="btn btn-secondary">{{ tag.name }}</a>
+		{% endfor %}
+	    </div>
+	</div>
+    </div>
 
-    <p>
-	<a href="{% url 'bills:new' %}">Create bill</a>
-    </p>
+    <div class="row py-2">
+	<div class="col">
+	    <a href="{% url 'bills:new' %}" class="btn btn-success">Create bill</a>
+	</div>
+    </div>
+
+    <div class="row">
+	<div class="col-12">
+	    <table class="table table-striped">
+		{% for bill in object_list %}
+		    <tr>
+			<td>{{ bill.id }}</td>
+			<td>{{ bill.period | format_period }}</td>
+			<td>{{ bill | state_str | safe }}</td>
+			<td>
+			    {% if bill.payment_method %}
+				{{ bill.payment_method.name }}
+			    {% endif %}
+			</td>
+			<td>{{ bill.cost }}</td>
+			<td>{{ bill.created | format_date_long }}</td>
+			<td>{{ bill.paid | format_date_long }}</td>
+			<td>{{ bill.printed | format_date_long }}</td>
+			<td>{{ bill | tag_names }}
+			    <td>
+				<a href="{% url 'bills:edit' pk=bill.id %}">Edit</a>
+				{% for tr in bill.get_available_state_i_transitions %}
+				    <a href="{% url 'bills:edit' pk=bill.id action=tr.name %}">{{ tr | transition_str }}</a>
+				{% endfor %}
+				<a href="{% url 'bills:delete' pk=bill.id %}">Delete</a>
+			    </td>
+		    </tr>
+		{% endfor %}
+	    </table>
+	</div>
+    </div>
     
-    <table class="full-width bills-list-table">
-	{% for bill in object_list %}
-	    <tr>
-		<td>{{ bill.id }}</td>
-		<td>{{ bill.period | format_period }}</td>
-		<td>{{ bill | state_str | safe }}
-		<td>
-		    {% if bill.payment_method %}
-			{{ bill.payment_method.name }}
-		    {% endif %}
-		</td>
-		<td>{{ bill.cost }}</td>
-		<td>{{ bill.created | format_date_long }}</td>
-		<td>{{ bill.paid | format_date_long }}</td>
-		<td>{{ bill.printed | format_date_long }}</td>
-		<td>{{ bill | tag_names }}
-		<td>
-		    <a href="{% url 'bills:edit' pk=bill.id %}">Edit</a>
-		    {% for tr in bill.get_available_state_i_transitions %}
-			<a href="{% url 'bills:edit' pk=bill.id action=tr.name %}">{{ tr | transition_str }}</a>
-		    {% endfor %}
-		    <a href="{% url 'bills:delete' pk=bill.id %}">Delete</a>
-		</td>
-	    </tr>
-	{% endfor %}
-    </table>
+
 {% endblock %}
