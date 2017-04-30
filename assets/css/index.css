@@ -1,15 +1,1 @@
-@font-face {
-    font-family: 'DejaVu Sans';
-    src: local('DejaVu Sans'), url('~dejavu-fonts-ttf/ttf/DejaVuSans.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    font-size: 16px;
-    font-family: 'DejaVu Sans';
-}
-
-h1 {
-    font-size: 1.5;
-}
+@import "~bootstrap/scss/bootstrap.scss";

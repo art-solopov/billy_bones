@@ -1,4 +1,7 @@
 const path = require('path');
+
+const webpack = require('webpack');
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const env = require('process').env;
 
@@ -44,7 +47,11 @@ module.exports = {
 	]
     },
     plugins: [
-	new ExtractTextPlugin('application.css')
+	new ExtractTextPlugin('application.css'),
+	new webpack.ProvidePlugin({
+	    $: 'jquery',
+	    jQuery: 'jquery'
+	})
     ],
     devServer: {
 	contentBase: dist,
