@@ -20,16 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    'SECRET_KEY',
-    'v9$xt$5z&n(*qey0hsd-9&aczi71#7y2q$q(razc&a@0(ymqfw'
-)
+SECRET_KEY = 'v9$xt$5z&n(*qey0hsd-9&aczi71#7y2q$q(razc&a@0(ymqfw'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv('DEBUG', 1))
-
-ALLOWED_HOSTS = []
-
+DEBUG = True
 
 # Application definition
 
@@ -84,11 +79,7 @@ WSGI_APPLICATION = 'billy_bones.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'billy-bones-development'),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', ''),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': os.getenv('DB_PASSWORD', '')
+        'NAME': 'billy-bones-development'
     }
 }
 
@@ -147,6 +138,11 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'sql_color'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log')
         }
     },
 
@@ -154,6 +150,10 @@ LOGGING = {
         'django.db.backends': {
             'level': 'DEBUG',
             'handlers': ['sql_console']
+        },
+        'django.request': {
+            'level': 'DEBUG',
+            'handlers': ['console']
         }
     },
 

@@ -98,3 +98,9 @@ node_modules
 # Assets
 */static/*.css
 */static/*.js
+
+# Vagrant-related files
+.vagrant
+
+# Secret settings, OMG!
+billy_bones/settings_prod.py
