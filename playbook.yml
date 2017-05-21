@@ -1,0 +1,56 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install Python
+      apt:
+        name: python3
+        state: latest
+        update_cache: yes
+    - name: Install Pip
+      apt:
+        name: python3-pip
+        state: latest
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+    - name: Install WSGI2 for Python 3
+      apt:
+        name: libapache2-mod-wsgi-py3
+        state: latest
+    - name: Install the Postgresql client
+      apt:
+        name: postgresql-client-9.5
+        state: present
+    - name: Install libpq-dev
+      apt:
+        name: libpq-dev
+        state: present
+    - name: Install the dependencies
+      shell: pip3 install -r requirements.txt
+      args:
+        chdir: /usr/app
+    - find:
+        path: /etc/apache2/sites-enabled
+        pattern: "0*.conf"
+      register: old_apache_cfg
+    - name: Delete old Apache configs
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items:
+        - "{{ old_apache_cfg.files }}"
+    - name: Copy the WSGI config
+      copy:
+        src: apache.conf
+        dest: /etc/apache2/sites-enabled/billy_bones.conf
+        owner: root
+        group: root
+        mode: 0644
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+        
