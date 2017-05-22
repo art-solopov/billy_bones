@@ -2,65 +2,10 @@
 - hosts: all
   become: yes
   become_method: sudo
-  vars:
-    apt_dependent:
-      - python3
-      - python3-pip
-      - apache2
-      - libapache2-mod-wsgi-py3
-      - postgresql-client-9.5
-      - libpq-dev
-    artifacts_dir: /home/ubuntu/.artifacts
-    artifact_requirements: "{{ artifacts_dir }}/requirements.txt"
+  vars_files:
+    - deploy/vars/shared.yml  
   tasks:
-    - name: Add the artifacts dir
-      file:
-        path: "{{ artifacts_dir }}"
-        state: directory
-        owner: ubuntu
-        group: ubuntu
-    - name: Update the cache
-      apt:
-        update_cache: yes
-    - name: Install the APT dependencies
-      apt:
-        name: "{{ item }}"
-        state: latest
-      with_items:
-        - "{{ apt_dependent }}"
-    - shell: cmp -s requirements.txt "{{ artifact_requirements }}" && echo 1 || echo 0
-      args:
-        chdir: /usr/app
-      register: req_diff
-    - name: Install the dependencies
-      shell: pip3 install -r requirements.txt
-      args:
-        chdir: /usr/app
-      when: req_diff.stdout == "0"
-    - copy:
-        src: requirements.txt
-        dest: "{{ artifact_requirements }}"
-        owner: ubuntu
-        group: ubuntu
-    - find:
-        path: /etc/apache2/sites-enabled
-        pattern: "0*.conf"
-      register: old_apache_cfg
-    - name: Delete old Apache configs
-      file:
-        path: "{{ item.path }}"
-        state: absent
-      with_items:
-        - "{{ old_apache_cfg.files }}"
-    - name: Copy the WSGI config
-      copy:
-        src: apache.conf
-        dest: /etc/apache2/sites-enabled/billy_bones.conf
-        owner: root
-        group: root
-        mode: 0644
-    - name: Restart Apache
-      service:
-        name: apache2
-        state: restarted
-        
+    - include: deploy/tasks/meta.yml
+    - include: deploy/tasks/apt.yml
+    - include: deploy/tasks/python.yml
+    - include: deploy/tasks/apache.yml

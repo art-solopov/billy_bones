@@ -1,0 +1,22 @@
+---
+- find:
+    path: /etc/apache2/sites-enabled
+    pattern: "0*.conf"
+  register: old_apache_cfg
+- name: Delete old Apache configs
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ old_apache_cfg.files }}"
+- name: Copy the WSGI config
+  copy:
+    src: apache.conf
+    dest: /etc/apache2/sites-enabled/billy_bones.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
