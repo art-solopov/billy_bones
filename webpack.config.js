@@ -1,16 +1,28 @@
 const path = require('path');
+const env = require('process').env;
 
 const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const env = require('process').env;
+const ManifestPlugin = require('webpack-manifest-plugin');
+const _ = require('lodash');
 
 const dist = path.resolve(__dirname, 'home/static/');
 
+function moduleName(format) {
+    let name = '[name]';
+    if(env.WEBPACK_PRODUCTION) {
+	name += '-[chunkhash]';
+    }
+    return `${name}.${format}`;
+}
+
 module.exports = {
-    entry: ['./assets/js/index.js', './assets/css/index.css'],
+    entry: {
+	application: ['babel-polyfill', './assets/js/index.js', './assets/css/index.css']
+    },
     output: {
-	filename: 'application.js',
+	filename: moduleName('js'),
 	path: dist
     },
     module: {
@@ -47,11 +59,22 @@ module.exports = {
 	]
     },
     plugins: [
-	new ExtractTextPlugin('application.css'),
+	new ExtractTextPlugin(moduleName('css')),
 	new webpack.ProvidePlugin({
 	    $: 'jquery',
-	    jQuery: 'jquery'
-	})
+	    jQuery: 'jquery',
+	    tether: 'tether',
+	    Tether: 'tether'
+	}),
+	new webpack.optimize.CommonsChunkPlugin(
+	    {
+		name: 'vendor',
+		minChunks: module => module.context && _.includes(module.context, 'node_modules')
+		
+	    }
+	),
+	new webpack.optimize.CommonsChunkPlugin({name: 'runtime'}),
+	new ManifestPlugin()
     ],
     devServer: {
 	contentBase: dist,

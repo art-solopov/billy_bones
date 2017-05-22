@@ -98,6 +98,7 @@ node_modules
 # Assets
 */static/*.css
 */static/*.js
+*/static/*.json
 
 # Vagrant-related files
 .vagrant

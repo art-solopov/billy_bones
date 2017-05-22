@@ -9,6 +9,7 @@
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "bootstrap": "4.0.0-alpha.6",
     "css-loader": "^0.28.0",
@@ -16,10 +17,12 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "webpack-manifest-plugin": "^1.1.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.4.2"
