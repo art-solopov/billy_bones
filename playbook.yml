@@ -2,36 +2,46 @@
 - hosts: all
   become: yes
   become_method: sudo
+  vars:
+    apt_dependent:
+      - python3
+      - python3-pip
+      - apache2
+      - libapache2-mod-wsgi-py3
+      - postgresql-client-9.5
+      - libpq-dev
+    artifacts_dir: /home/ubuntu/.artifacts
+    artifact_requirements: "{{ artifacts_dir }}/requirements.txt"
   tasks:
-    - name: Install Python
+    - name: Add the artifacts dir
+      file:
+        path: "{{ artifacts_dir }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+    - name: Update the cache
       apt:
-        name: python3
-        state: latest
         update_cache: yes
-    - name: Install Pip
+    - name: Install the APT dependencies
       apt:
-        name: python3-pip
+        name: "{{ item }}"
         state: latest
-    - name: Install Apache
-      apt:
-        name: apache2
-        state: present
-    - name: Install WSGI2 for Python 3
-      apt:
-        name: libapache2-mod-wsgi-py3
-        state: latest
-    - name: Install the Postgresql client
-      apt:
-        name: postgresql-client-9.5
-        state: present
-    - name: Install libpq-dev
-      apt:
-        name: libpq-dev
-        state: present
+      with_items:
+        - "{{ apt_dependent }}"
+    - shell: cmp -s requirements.txt "{{ artifact_requirements }}" && echo 1 || echo 0
+      args:
+        chdir: /usr/app
+      register: req_diff
     - name: Install the dependencies
       shell: pip3 install -r requirements.txt
       args:
         chdir: /usr/app
+      when: req_diff.stdout == "0"
+    - copy:
+        src: requirements.txt
+        dest: "{{ artifact_requirements }}"
+        owner: ubuntu
+        group: ubuntu
     - find:
         path: /etc/apache2/sites-enabled
         pattern: "0*.conf"
