@@ -50,8 +50,8 @@ module.exports = {
 		    loader: 'file-loader',
 		    options: {
 			dist,
-			name: env.NODE_ENV === 'production' ? '[name]-[hash].[ext]' : '[name].[ext]',
-			publicPath: env.NODE_ENV === 'production' ? '/static/' : 'http://localhost:12800/'
+			name: env.WEBPACK_PRODUCTION ? '[name]-[hash].[ext]' : '[name].[ext]',
+			publicPath: env.WEBPACK_PRODUCTION ? '/static/' : 'http://localhost:12800/'
 		    }
 		}]
 

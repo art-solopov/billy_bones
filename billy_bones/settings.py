@@ -174,3 +174,9 @@ LOGGING = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+WEBPACK_DEV_URL = 'http://localhost:12800'
+
+# We need to specify order
+WEBPACK_ASSETS = [
+    'runtime.js', 'vendor.js', 'application.css', 'application.js'
+]
