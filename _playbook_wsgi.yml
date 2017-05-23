@@ -6,6 +6,5 @@
     - deploy/vars/shared.yml
   tasks:
     - include: deploy/tasks/meta.yml
-    - include: deploy/tasks/apt.yml
     - include: deploy/tasks/python.yml
     - include: deploy/tasks/apache.yml

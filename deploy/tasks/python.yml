@@ -1,15 +1,19 @@
 ---
 - shell: cmp -s requirements.txt "{{ artifact_requirements }}" && echo 1 || echo 0
   args:
-    chdir: /usr/app
+    chdir: "{{ app_dir }}"
   register: req_diff
 - name: Install the dependencies
   shell: pip3 install -r requirements.txt
   args:
-    chdir: /usr/app
+    chdir: "{{ app_dir }}"
   when: req_diff.stdout == "0"
 - copy:
     src: requirements.txt
     dest: "{{ artifact_requirements }}"
     owner: ubuntu
     group: ubuntu
+- name: Make the log file permissible for anyone (?)
+  file:
+    path: "{{ app_dir }}/logs/django.log"
+    mode: 0666

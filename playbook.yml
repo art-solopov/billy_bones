@@ -1,3 +1,5 @@
 ---
+- include: _playbook_apt.yml
 - include: _playbook_wsgi.yml
-- include: _playbook_nvm.yml
+- include: _playbook_webpack.yml
+- include: _playbook_django.yml

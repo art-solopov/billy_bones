@@ -1,0 +1,21 @@
+---
+- hosts: all
+  vars_files:
+    - deploy/vars/shared.yml
+  environment:
+    PATH: "{{ node_install }}/bin:{{ ansible_env.PATH }}"
+    WEBPACK_PRODUCTION: 1
+    DJANGO_SETTINGS_MODULE: billy_bones.settings_prod
+  tasks:
+    - name: Install Yarn dependencies
+      command: "yarn install"
+      args:
+        chdir: "{{ app_dir }}"
+    - name: Compile assets
+      command: "yarn run webpack"
+      args:
+        chdir: "{{ app_dir }}"
+    - name: Assemble static files
+      command: "python3 manage.py collectstatic --no-input"
+      args:
+        chdir: "{{ app_dir }}"

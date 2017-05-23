@@ -17,5 +17,8 @@ DATABASES = {
     }
 }
 
+MANIFEST_PATH = os.path.join(BASE_DIR, 'home', 'static', 'manifest.json')
+STATIC_ROOT = os.path.join(BASE_DIR, '__static')
+
 for lgr in LOGGING['loggers'].values():
     lgr['handlers'] = ['file']

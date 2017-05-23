@@ -1,0 +1,21 @@
+---
+- hosts: all
+  vars_files:
+    - deploy/vars/shared.yml
+  vars:
+    # SHA256 sum fetched from the Node website
+    node_checksum: c847251538579d605ac391c5e282ad40b2ead0414df7699f58781d9e6e80248a
+  tasks:
+    - name: Download Node
+      get_url:
+        url: "https://nodejs.org/dist/v{{ node_version }}/{{ node_name }}.tar.xz"
+        dest: "{{ ansible_env.HOME }}"
+        sha256sum: "{{ node_checksum }}"
+      register: node_fetch
+    - debug:
+        msg: "{{ node_fetch }}"
+    - name: Unpack Node
+      unarchive:
+        remote_src: yes
+        src: "{{ node_fetch.dest }}"
+        dest: "{{ ansible_env.HOME }}"

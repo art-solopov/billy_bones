@@ -1,4 +1,12 @@
 ---
+- name: Add Yarn key
+  apt_key:
+    url: "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    state: present
+- name: Add Yarn repo
+  apt_repository:
+    repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+    state: present
 - name: Update the cache
   apt:
     update_cache: yes
@@ -7,4 +15,4 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - "{{ apt_dependent }}"
+    - "{{ packages }}"
