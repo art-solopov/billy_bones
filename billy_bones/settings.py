@@ -173,7 +173,9 @@ LOGGING = {
     }
 }
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+MANIFEST_PATH = None
 WEBPACK_DEV_URL = 'http://localhost:12800'
 
 # We need to specify order
