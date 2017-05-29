@@ -1,0 +1,24 @@
+.generate-padding(@i: -2) when (@i <= 7) {
+    @var: ms(@i)rem;
+
+    .pd-top-@{i},
+    .pd-y-@{i} {
+	padding-top: @var;
+    }
+    .pd-bot-@{i},
+    .pd-y-@{i} {
+	padding-bottom: @var;
+    }
+    .pd-left-@{i},
+    .pd-x-@{i} {
+	padding-left: @var;
+    }
+    .pd-right-@{i},
+    .pd-x-@{i} {
+	padding-left: @var;
+    }
+
+    .generate-padding(@i + 1);
+}
+
+.generate-padding();

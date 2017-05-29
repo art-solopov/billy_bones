@@ -7,6 +7,7 @@
   "author": "Artemiy Solopov <art-solopov@yandex.ru>",
   "license": "MIT",
   "dependencies": {
+    "autoprefixer": "^7.1.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-polyfill": "^6.23.0",
@@ -23,6 +24,8 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "node-sass": "^4.5.2",
+    "postcss-loader": "^2.0.5",
+    "postcss-modular-scale": "^2.5.2",
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "^0.1.0-beta.10",
     "style-loader": "^0.16.1",

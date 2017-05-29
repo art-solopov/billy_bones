@@ -31,7 +31,21 @@ module.exports = {
 		test: /\.(css|less)$/,
 		use: ExtractTextPlugin.extract({
 		    fallback: 'style-loader',
-		    use: ['css-loader', 'less-loader']
+		    use: [
+			{
+			    loader: 'css-loader'
+			},
+			{
+			    loader: 'postcss-loader',
+			    options: {
+				plugins: loader => [
+				    require('postcss-modular-scale')(),
+				    require('autoprefixer')()
+				]
+			    }
+			},
+			'less-loader'
+		    ]
 		})
 	    },
 	    {

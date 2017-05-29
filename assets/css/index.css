@@ -3,3 +3,10 @@
 @import "~select2/dist/css/select2.css";
 @import "~select2-bootstrap-theme/dist/select2-bootstrap.css";
 @import "~eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
+
+:root {
+    --ms-bases: 1;
+    --ms-ratios: 1.333;
+}
+
+@import "./utils/helpers.less";
