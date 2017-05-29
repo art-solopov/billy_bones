@@ -41,6 +41,7 @@ class BillForm(ModelForm):
         self._adjust_validations()
         self._adjust_initials()
         self.helper = FormHelper(self)
+        self.helper.form_class = 'bills-bill-form'
         self.helper.layout = Layout(
             Div(
                 Div('period_month', css_class='col-sm-12 col-md-4'),

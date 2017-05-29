@@ -36,7 +36,14 @@ class DeletePaymentMethod(DeleteView):
     success_url = reverse_lazy('bills:payment_methods:index')
 
 
-class BillsList(ListView):
+class WithBillsTagsMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Bill.tags.values('name', 'slug')
+        return context
+
+
+class BillsList(WithBillsTagsMixin, ListView):
     model = Bill
     template_name = 'bills/bills_list.html'
 
@@ -47,15 +54,8 @@ class BillsList(ListView):
             queryset = queryset.filter(tags__name=tag)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tags'] = Tag.objects.filter(
-            taggit_taggeditem_items__content_type__model='bill').\
-            values('name', 'slug')
-        return context
 
-
-class BillCUMixin:
+class BillCUMixin(WithBillsTagsMixin):
     template_name = 'bills/bill_form.html'
     model = models.Bill
     form_class = forms.BillForm
@@ -79,7 +79,7 @@ class EditBill(BillCUMixin, UpdateView):
 
 
 class CreateBill(BillCUMixin, CreateView):
-    initial = {'state_i': 1}
+    initial = {'state_i': models.Bill.STATE_IDS['new']}
 
 
 class DeleteBill(DeleteView):

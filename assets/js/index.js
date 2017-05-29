@@ -2,5 +2,4 @@ require('bootstrap');
 
 require('./initializers');
 
-// TODO debug
-window.$ = $;
+require('./controllers/bills/bill_form');

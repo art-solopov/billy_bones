@@ -4,4 +4,13 @@
 {% block content %}
     {% crispy form %}
 {% endblock %}
-	
+
+{% block very_end %}
+    <script type="text/javascript">
+     window.billTags = [
+	 {% for tag in tags %}
+	 "{{ tag.name | escapejs }}",
+	 {% endfor %}
+     ]
+    </script>
+{% endblock %}

@@ -10,11 +10,7 @@
 
     <div class="row">
 	<div class="col">
-	    <div class="btn-group" role="group" aria-label="Bills tags">
-		{% for tag in tags %}
-		    <a href="{% url 'bills:index' tag=tag.slug %}" class="btn btn-secondary">{{ tag.name }}</a>
-		{% endfor %}
-	    </div>
+	    <!-- TODO: recreate tags list properly -->
 	</div>
     </div>
 
