@@ -9,19 +9,23 @@
     </header>
 
     <div class="row">
-	<div class="col">
-	    <!-- TODO: recreate tags list properly -->
+	<div class="col-sm-12">
+	    <!-- TODO: crispy forms -->
+	    <form action="" method="GET">
+		{{ bills_filter.form.as_p }}
+		<input type="Submit" value="Search" />
+	    </form>
 	</div>
     </div>
 
     <div class="row pd-y-1">
-	<div class="col">
+	<div class="col-sm-12">
 	    <a href="{% url 'bills:new' %}" class="btn btn-success">Create bill</a>
 	</div>
     </div>
 
     <div class="row">
-	<div class="col-12">
+	<div class="col-sm-12">
 	    <table class="table table-striped">
 		{% for bill in object_list %}
 		    <tr>

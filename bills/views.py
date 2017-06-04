@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django_fsm import can_proceed
 from taggit.models import Tag
 
-from .models import PaymentMethod, Bill
+from .models import PaymentMethod, Bill, BillsFilter
 from . import forms
 from . import models
 
@@ -48,11 +48,15 @@ class BillsList(WithBillsTagsMixin, ListView):
     template_name = 'bills/bills_list.html'
 
     def get_queryset(self):
-        queryset = Bill.objects.prefetch_related('payment_method', 'tags')
-        tag = self.kwargs.get('tag', None)
-        if tag:
-            queryset = queryset.filter(tags__name=tag)
-        return queryset
+        queryset = Bill.objects.prefetch_related('payment_method', 'tags')\
+                               .order_by('id')
+        self.bills_filter = BillsFilter(self.request.GET, queryset=queryset)
+        return self.bills_filter.qs.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bills_filter'] = self.bills_filter
+        return context
 
 
 class BillCUMixin(WithBillsTagsMixin):

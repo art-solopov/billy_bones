@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'taggit',
     'django_activeurl',
     'crispy_forms',
+    'django_filters',
     'home',
     'bills',
 ]
