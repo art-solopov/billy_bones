@@ -13,6 +13,16 @@
     dest: "{{ artifact_requirements }}"
     owner: ubuntu
     group: ubuntu
+- name: Production settings
+  template:
+    src: billy_bones/settings_prod.template.py
+    dest: "{{ app_dir }}/billy_bones/settings_prod.py"
+    force: yes
+- name: Static directory
+  file:
+    path: "{{ django_staticroot }}"
+    state: directory
+    mode: 0777
 - name: Make the log file permissible for anyone (?)
   file:
     path: "{{ app_dir }}/logs/django.log"

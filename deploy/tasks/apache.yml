@@ -9,13 +9,14 @@
     state: absent
   with_items:
     - "{{ old_apache_cfg.files }}"
-- name: Copy the WSGI config
-  copy:
-    src: apache.conf
+- name: WSGI config
+  template:
+    src: apache.template.conf
     dest: /etc/apache2/sites-enabled/billy_bones.conf
     owner: root
     group: root
     mode: 0644
+    force: yes
 - name: Restart Apache
   service:
     name: apache2

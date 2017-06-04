@@ -105,3 +105,4 @@ node_modules
 
 # Secret settings, OMG!
 billy_bones/settings_prod.py
+deploy/vars/prod_settings.yml

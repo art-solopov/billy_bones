@@ -4,6 +4,7 @@
   become_method: sudo
   vars_files:
     - deploy/vars/shared.yml
+    - deploy/vars/prod_settings.yml
   tasks:
     - include: deploy/tasks/meta.yml
     - include: deploy/tasks/python.yml
