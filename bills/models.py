@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
 from django_fsm import FSMIntegerField, transition
 from taggit.managers import TaggableManager
-import django_filters
 
 
 class PaymentMethod(models.Model):
@@ -75,23 +74,3 @@ class Bill(TimeStampedModel):
 
         if errors:
             raise ValidationError(errors)
-
-
-class BillsFilter(django_filters.FilterSet):
-    state_i__in = django_filters.TypedMultipleChoiceFilter(
-        name='state_i',
-        label='State',
-        lookup_expr='in',
-        coerce=int,
-        choices=list(Bill.STATES.items())
-    )
-
-    class Meta:
-        model = Bill
-        fields = {
-            'cost': ['lte', 'gte'],
-            'period': ['lte', 'gte', 'exact'],
-            'paid': ['lte', 'gte'],
-            'printed': ['lte', 'gte'],
-            'tags__name': ['in'],
-        }

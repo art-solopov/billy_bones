@@ -3,9 +3,12 @@ from django.views.generic import ListView
 from django.views.generic.edit import (DeleteView, CreateView, UpdateView)
 from django.core.exceptions import PermissionDenied
 from django_fsm import can_proceed
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, ButtonHolder, Div, Submit
 from taggit.models import Tag
 
-from .models import PaymentMethod, Bill, BillsFilter
+from .models import PaymentMethod, Bill
+from .filters import BillsFilter
 from . import forms
 from . import models
 
@@ -55,8 +58,15 @@ class BillsList(WithBillsTagsMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        self.prepare_filter_form()
         context['bills_filter'] = self.bills_filter
         return context
+
+    def prepare_filter_form(self):
+        f = self.bills_filter.form
+        f.helper = FormHelper()
+        f.helper.form_method = 'GET'
+        f.helper.add_input(Submit('search', 'Search'))
 
 
 class BillCUMixin(WithBillsTagsMixin):
