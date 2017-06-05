@@ -35,8 +35,11 @@ class BillsFilter(django_filters.FilterSet):
         fh = FormHelper()
         fh.form_method = 'GET'
         fh.layout = Layout(
+            # Since the form starts invisible, we have to set the selects'
+            # widths manually
             Div(
-                Field('state_i__in', wrapper_class='col-sm-12'),
+                Field('state_i__in', wrapper_class='col-sm-12',
+                      style='width: 100%'),
                 css_class='row'
             ),
             Div(
@@ -60,7 +63,8 @@ class BillsFilter(django_filters.FilterSet):
                 css_class='row'
             ),
             Div(
-                Field('tags__name__in', wrapper_class='col-sm-12'),
+                Field('tags__name__in', wrapper_class='col-sm-12',
+                      style='width: 100%'),
                 css_class='row'
             ),
             Div(
