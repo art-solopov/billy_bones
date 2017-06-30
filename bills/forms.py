@@ -4,7 +4,7 @@ from datetime import date
 from django import forms
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, ButtonHolder, Div, Submit
+from crispy_forms.layout import Layout, ButtonHolder, Div, Row, Submit
 
 from . import models
 
@@ -23,7 +23,6 @@ class PaymentMethodForm(ModelForm):
             Submit('submit', 'Submit', css_class='btn btn-success')
         )
 
-
 class BillForm(ModelForm):
     period_month = forms.TypedChoiceField(
         choices=list(enumerate(calendar.month_name))[1:],
@@ -34,27 +33,16 @@ class BillForm(ModelForm):
 
     class Meta:
         model = models.Bill
-        exclude = ['period', 'state_i']
+        fields = ['tags', 'cost']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._adjust_validations()
-        self._adjust_initials()
         self.helper = FormHelper(self)
         self.helper.form_class = 'bills-bill-form'
-        self.helper.layout = Layout(
-            Div(
-                Div('period_month', css_class='col-sm-12 col-md-4'),
-                Div('period_year', css_class='col-sm-12 col-md-4'),
-                css_class='row'
-            ),
-            'cost',
-            'paid',
-            'printed',
-            'tags',
-            'payment_method',
-            Submit('submit', 'Submit', css_class='btn btn-success')
-        )
+        layout = self._build_fields()
+        layout.fields.append(Submit('submit', 'Submit'))
+        self.helper.layout = layout
 
     def save(self):
         self.instance.period = date(
@@ -65,13 +53,43 @@ class BillForm(ModelForm):
         return super().save()
 
     def _adjust_validations(self):
-        instance = self.instance
-        if instance.state != 'new':
-            self.fields['paid'].required = True
-        if instance.state == 'printed':
-            self.fields['printed'].required = True
+        pass
 
     def _adjust_initials(self):
         period = self.instance.period or date.today()
         self.fields['period_month'].initial = period.month
         self.fields['period_year'].initial = period.year
+
+    def _build_fields(self):
+        return Layout(
+            'tags',
+            Row(
+                Div('period_month', css_class='col-sm-12 col-md-4'),
+                Div('period_year', css_class='col-sm-12 col-md-4'),
+            ),
+            Row(
+                # TODO: add currency
+                Div('cost', css_class='col-sm-12 col-md-3')
+            )
+        )
+
+
+class PaidBillForm(BillForm):
+    class Meta:
+        model = models.Bill
+        fields = BillForm.Meta.fields + ['payment_method', 'paid']
+
+    def _adjust_validations(self):
+        self.fields['paid'].required = True
+        self.fields['payment_method'].required = True
+
+    def _build_fields(self):
+        layout = super()._build_fields()
+        cost_row = layout.fields[-1]
+        cost_row.fields.append(
+            Div('paid', css_class='col-sm-12 col-md-6')
+        )
+        layout.append(
+            'payment_method'
+        )
+        return layout

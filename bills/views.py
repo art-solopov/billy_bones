@@ -67,8 +67,12 @@ class BillsList(WithBillsTagsMixin, ListView):
 class BillCUMixin(WithBillsTagsMixin):
     template_name = 'bills/bill_form.html'
     model = models.Bill
-    form_class = forms.BillForm
     success_url = reverse_lazy('bills:index')
+
+    def get_form_class(self):
+        if self.object and self.object.state_i != Bill.STATE_IDS['new']:
+            return forms.PaidBillForm
+        return forms.BillForm
 
 
 class EditBill(BillCUMixin, UpdateView):
