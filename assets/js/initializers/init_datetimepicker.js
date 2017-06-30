@@ -1,3 +1,4 @@
+/* global $, require */
 require('eonasdan-bootstrap-datetimepicker');
 
 const dateTimePickerInit = (selector = '.datetimeinput') => {
@@ -7,6 +8,14 @@ const dateTimePickerInit = (selector = '.datetimeinput') => {
     });
 };
 
+const datePickerInit = (selector = '.dateinput') => {
+    $(selector).datetimepicker({
+        showTodayButton: true,
+        format: 'YYYY-MM-DD'
+    })
+}
+
 $(() => {
-    dateTimePickerInit();
+    dateTimePickerInit()
+    datePickerInit()
 });

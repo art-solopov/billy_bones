@@ -26,7 +26,6 @@ class BillsFilter(django_filters.FilterSet):
             'cost': ['lte', 'gte'],
             'period': ['lte', 'gte'],
             'paid': ['lte', 'gte'],
-            'printed': ['lte', 'gte'],
             'tags__name': ['in'],
         }
 
@@ -55,11 +54,6 @@ class BillsFilter(django_filters.FilterSet):
             Div(
                 Field('paid__lte', wrapper_class='col-sm-12 col-md-6'),
                 Field('paid__gte', wrapper_class='col-sm-12 col-md-6'),
-                css_class='row'
-            ),
-            Div(
-                Field('printed__lte', wrapper_class='col-sm-12 col-md-6'),
-                Field('printed__gte', wrapper_class='col-sm-12 col-md-6'),
                 css_class='row'
             ),
             Div(

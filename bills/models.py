@@ -19,8 +19,7 @@ class Bill(TimeStampedModel):
     # State machine
     STATES = OrderedDict([
         (1, 'new'),
-        (50, 'paid'),
-        (99, 'printed')
+        (50, 'paid')
     ])
     STATE_IDS = {name: i for i, name in STATES.items()}
 
@@ -35,19 +34,13 @@ class Bill(TimeStampedModel):
     def pay(self):
         self.paid = dt.now()
 
-    @transition(field='state_i',
-                source=STATE_IDS['paid'], target=STATE_IDS['printed'])
-    def print(self):
-        self.printed = dt.now()
-
     # State machine ended
 
     period = models.DateField(db_index=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.TextField(null=True, blank=True)
 
-    paid = models.DateTimeField(null=True, blank=True)
-    printed = models.DateTimeField(null=True, blank=True)
+    paid = models.DateField(null=True, blank=True)
 
     payment_method = models.ForeignKey(
         'PaymentMethod',
@@ -68,9 +61,6 @@ class Bill(TimeStampedModel):
                 errors['paid'] = "Paid must be present"
             if self.payment_method is None:
                 errors['payment_method'] = "Payment method must be present"
-        if self.state == 'printed':
-            if not self.printed:
-                errors['printed'] = "Printed must be present"
 
         if errors:
             raise ValidationError(errors)
