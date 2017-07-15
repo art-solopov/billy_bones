@@ -38,6 +38,7 @@ class BillForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._adjust_validations()
+        self._adjust_initials()
         self.helper = FormHelper(self)
         self.helper.form_class = 'bills-bill-form'
         layout = self._build_fields()
