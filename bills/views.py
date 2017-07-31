@@ -49,7 +49,7 @@ class BillsList(WithBillsTagsMixin, ListView):
 
     def get_queryset(self):
         queryset = Bill.objects.prefetch_related('payment_method', 'tags')\
-                               .order_by('id')
+                               .order_by('-created')
         self.bills_filter = BillsFilter(self.request.GET, queryset=queryset)
         return self.bills_filter.qs.distinct()
 

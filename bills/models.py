@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from datetime import datetime as dt
 
+import arrow
 from django.db import models
 from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
@@ -53,6 +54,26 @@ class Bill(TimeStampedModel):
     @property
     def state(self):
         return self.STATES[self.state_i]
+
+    def _days_diff_with_monthshift(self, field, months=0):
+        now = arrow.now()
+        val = arrow.get(getattr(self, field))
+        return (now - val.shift(months=months)).days
+
+    def is_close_to_due(self):
+        # TODO: configure numeric variables
+        if self.is_overdue():
+            return False
+        return (
+            self._days_diff_with_monthshift('period', 1) > 0 or
+            self._days_diff_with_monthshift('created') > 15
+        )
+
+    def is_overdue(self):
+        return (
+            self._days_diff_with_monthshift('period', 2) > 0 or
+            self._days_diff_with_monthshift('created', 1) > 0
+        )
 
     def clean(self):
         errors = {}
