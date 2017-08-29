@@ -1,7 +1,12 @@
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
+from model_utils.models import TimeStampedModel
 
 
-class Note(models.Model):
-    content_type = models.ForeignKey(ContentType)
+class Note(TimeStampedModel):
+    TYPE_CHOICES = (
+        (1, 'Bill'),
+    )
+
+    note_type = models.IntegerField(choices=TYPE_CHOICES, db_index=True)
+    title = models.CharField(max_length=511)
     text = models.TextField()
