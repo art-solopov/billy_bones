@@ -1,5 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello world!</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="#" class="btn btn-success">New note</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                </thead>
+                <tbody>
+                    {% for note in objects %}
+                        <tr>
+                            <td>{{ note.type }}</td>
+                            <td>{{ note.title }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">No notes found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
+
